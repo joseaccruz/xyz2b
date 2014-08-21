@@ -17,9 +17,9 @@ Download and install `Python` from [here](https://www.python.org/download/).
 
 Download and install the `XLRD` package from [here](https://pypi.python.org/pypi/xlrd/0.7.9).
 
-#### NumPy
+#### NumPy and SciPy
 
-Download and install the `NumPy` package from [here](http://www.scipy.org/scipylib/download.html).
+Download and install the `NumPy` and `SciPy` packages from [here](http://www.scipy.org/scipylib/download.html).
 
 #### Matplotlib
 

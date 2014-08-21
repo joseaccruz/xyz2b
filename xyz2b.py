@@ -39,6 +39,10 @@ files = utils.list_excel(DATA_DIR)
 
 fpairs = {}
 
+if len(files) == 0:
+    print "Nothing todo in '%s'" % DATA_DIR
+    quit()
+
 for name_xls in files:
     # get the names of the result files
     name_txt = name_xls.replace(".xlsx", ".txt")
@@ -56,6 +60,10 @@ for name_xls in files:
     fpairs[key].append(name_txt)
 
 for (key, files) in fpairs.items():
+    if len(files) != 2:
+        print "Missing file in pair for assay '%s'" % key
+        continue
+
     print "*****\n%s\n*****" % key
 
     name_sub = "%s/%s.sub" % (DATA_DIR, key)
