@@ -21,7 +21,7 @@ Download and install the `XLRD` package from [here](https://pypi.python.org/pypi
 
 Download and install the `NumPy` package from [here](http://www.scipy.org/scipylib/download.html).
 
-#### NumPy
+#### Matplotlib
 
 Download and install the `Matplotlib` package from [here](http://matplotlib.org/downloads.html).
 
@@ -62,20 +62,28 @@ The script expects, for each assay, the following data:
 
 2. A file with the (X, Y) coordinates obtained by a top view camera ("top" data).
 
-3. All data should be in excel files exactly as produced by ETS.
+All data should be in excel files exactly as produced by ETS and all files should be organized in a directory structure like this:
 
-Files should be organized in a directory structure like this:
-
-    /<data directory>
-        /side
+    /<experiment directory>
+        /<config>.py
+        /<data directory>
             /<assay_1>_side.xls
-            /<assay_2>_side.xls
-            /<assay_3>_side.xls
-        /top
             /<assay_1>_top.xls
+            /<assay_2>_side.xls
             /<assay_2>_top.xls
+            /<assay_3>_side.xls
             /<assay_3>_top.xls
-            
+
+**Important**
+
+1. Files must finish with "_side.xls" or "_side.xls".
+
+2. Files of the same assay must have the same prefix:
+
+    `Exp1_T2_side.xls`
+    `Exp2_T2_side.xls`
+     
+
 After running the script with the appropriate parameters (see bellow __Running the Script__) it will generate in the `/<data directory>` the following files for each assay:
 
     <assay_N>.txt    - A textual version of the Excel data.
