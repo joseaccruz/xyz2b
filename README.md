@@ -21,6 +21,11 @@ Download and install the `XLRD` package from [here](https://pypi.python.org/pypi
 
 Download and install the `NumPy` package from [here](http://www.scipy.org/scipylib/download.html).
 
+#### NumPy
+
+Download and install the `Matplotlib` package from [here](http://matplotlib.org/downloads.html).
+
+
 ### The Scripts
 
 You can find the `XYZ2B` scripts and docs from the [GitHub page]() of the project.
@@ -63,13 +68,13 @@ Files should be organized in a directory structure like this:
 
     /<data directory>
         /side
-            /<assay_1>.xls
-            /<assay_2>.xls
-            /<assay_3>.xls
+            /<assay_1>_side.xls
+            /<assay_2>_side.xls
+            /<assay_3>_side.xls
         /top
-            /<assay_1>.xls
-            /<assay_2>.xls
-            /<assay_3>.xls
+            /<assay_1>_top.xls
+            /<assay_2>_top.xls
+            /<assay_3>_top.xls
             
 After running the script with the appropriate parameters (see bellow __Running the Script__) it will generate in the `/<data directory>` the following files for each assay:
 
@@ -124,4 +129,4 @@ It decides if the fish is freezed if both conditions apply:
 It decides if the fish is in erratic movement if both conditions apply:
 
     Acceleration > THRESHOLD_A (both top and side)
-    
+
