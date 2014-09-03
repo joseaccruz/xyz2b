@@ -1,6 +1,5 @@
 # XYZ2B - Fish XYZ to Behaviour
 
-
 A set of python scripts that infer freezing (FREEZE) and erratic movements (EM) behaviour from X, Y, Z data produced by the Ethovision (R) Tracking Software (ETS).
 
 ## Installation
