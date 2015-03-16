@@ -75,12 +75,15 @@ All data should be in excel files exactly as produced by ETS and all files shoul
 
 **Important**
 
-1. Files must finish with "_side.xls" or "_side.xls".
+1. Files must finish with either `_side.xls` or `_top.xls`.
 
 2. Files of the same assay must have the same prefix:
 
     `Exp1_T2_side.xls`
+    `Exp1_T2_top.xls`
+
     `Exp2_T2_side.xls`
+    `Exp2_T2_top.xls`
      
 
 After running the script with the appropriate parameters (see bellow __Running the Script__) it will generate in the `/<data directory>` the following files for each assay:
