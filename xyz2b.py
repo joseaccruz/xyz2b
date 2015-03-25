@@ -1,4 +1,5 @@
-#|/usr/bin/env python
+#!/usr/bin/env python
+
 import os
 import sys
 
@@ -7,6 +8,7 @@ import matplotlib.pyplot as plt
 
 import compute
 import utils
+
 
 if len(sys.argv) != 2:
     print "\nUsage:\n\t%s <cfg_file>\n" % os.path.basename(sys.argv[0])
@@ -21,6 +23,7 @@ if not os.path.isfile(cfg_file):
 #
 # default config
 #
+ORIG_DIR = None
 DATA_DIR = "."
 FORCE_XLS_TO_TXT = False
 WIN_SMOOTH_SIZE = 25
@@ -30,13 +33,18 @@ THRES_V = 0.2
 THRES_Y = 0.25
 THRESHOLD_DC = 5
 THRESHOLD_A = 8
-
+BIN_SIZE = None
 
 # execute the configuration data
 exec open(cfg_file).read()
 
+# colect original files
+utils.collect_excel(ORIG_DIR, DATA_DIR)
+
+# colect prepared data files
 files = utils.list_excel(DATA_DIR)
 
+# check for all pair of files "side"/"top"
 fpairs = {}
 
 if len(files) == 0:
@@ -54,14 +62,16 @@ for name_xls in files:
     # pair the top and side files
     key = os.path.basename(name_txt).replace("_side.txt", "").replace("_top.txt", "")
 
-    if not key in fpairs.keys():
+    if key not in fpairs.keys():
         fpairs[key] = []
 
     fpairs[key].append(name_txt)
 
+bins_list = {}
+
 for (key, files) in fpairs.items():
     if len(files) != 2:
-        print "Missing file in pair for assay '%s'" % key
+        print "Missing file ('top' or 'side') in pair for assay '%s'" % key
         continue
 
     print "*****\n%s\n*****" % key
@@ -107,7 +117,7 @@ for (key, files) in fpairs.items():
     (veloc_s, accel_s) = compute.velocity(data_s, win_size=WIN_VELOCITY_SIZE)
     (veloc_t, accel_t) = compute.velocity(data_t, win_size=WIN_VELOCITY_SIZE)
 
-    #dchanges = compute.dir_changesX2(data, win_size=100)
+    # dchanges = compute.dir_changesX2(data, win_size=100)
     dchanges_s = compute.dir_changesX3(data_s, win_size=WIN_CHANGE_DIR_SIZE)
     dchanges_t = compute.dir_changesX3(data_t, win_size=WIN_CHANGE_DIR_SIZE)
 
@@ -115,7 +125,12 @@ for (key, files) in fpairs.items():
 
     intervals = compute.interval_list(fs, es, T)
     compute.subtitle(intervals, name_sub)
-    compute.report(fs, es, data_s, 0, name_rep)
+    bins = compute.report(fs, es, data_s, 0, name_rep, BIN_SIZE)
+    bins_list[key] = bins
+
+    # ===============
+    # utils.plot3d(data_t[:, 1], data_t[:, 2], data_s[:, 2], fs, es)
+    # ===============
 
     plt.figure(1)
     plt.subplot(5, 1, 1)
@@ -146,3 +161,5 @@ for (key, files) in fpairs.items():
 
     plt.show()
 
+name_summary = "%s/summary.report" % DATA_DIR
+compute.summary(bins_list, name_summary)

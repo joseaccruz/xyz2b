@@ -139,28 +139,42 @@ def subtitle(intervals, fname):
     fo.close()
 
 
-def report(freeze, erratic, data, ndx_col, fname):
+def report(freeze, erratic, data, ndx_col, fname, bsize=None):
     # compute event list
     events = []
     (fstart, estart) = (None, None)
     (ftotal, etotal) = (0, 0)
+
     for i in xrange(len(data)):
         t = data[i, ndx_col]
 
         if freeze[i] and fstart is None:
             fstart = t
-        if not freeze[i] and (not fstart is None):
-            events.append(('freeze ', fstart, t))
+        if not freeze[i] and (fstart is not None):
+            events.append(('freeze', fstart, t))
             ftotal += (t-fstart)
             fstart = None
         if erratic[i] and estart is None:
             estart = t
-        if not erratic[i] and (not estart is None):
+        if not erratic[i] and (estart is not None):
             events.append(('erratic', estart, t))
             etotal += (t-estart)
             estart = None
 
     events.sort(key=lambda x: x[1])
+
+    # compute bins
+    if bsize is not None:
+        bcount = int(t / bsize) + 1
+        bins = {'freeze': [0] * bcount, 'erratic': [0] * bcount}
+
+        for i in xrange(bcount):
+            (bstart, bend) = (i*bsize, (i+1)*bsize)
+
+            for (evt, estart, eend) in events:
+                bins[evt][i] += max(min(bend, eend) - max(bstart, estart), 0)
+    else:
+        bins = None
 
     # write event list
     fo = open(fname, "w")
@@ -170,14 +184,50 @@ def report(freeze, erratic, data, ndx_col, fname):
     fo.write("freeze \t%8.2f\t%s\n" % (ftotal, seconds2time(ftotal)))
     fo.write("erratic\t%8.2f\t%s\n" % (etotal, seconds2time(etotal)))
 
+    if bsize is not None:
+        fo.write("\nTotals bins (bin length=%s s)\n------\n" % bsize)
+        fo.write("Event\tBin\tTotal (s)\tTotal\n")
+
+        for (k, v) in bins.items():
+            for (i, t) in enumerate(v):
+                fo.write("%-7s\t%3d\t%8.2f\t%s\n" % (k, i, t, seconds2time(t)))
+
     fo.write("\nEvents\n------\n")
     fo.write("Name\tStart\tStop\tTotal\tStart (s)\tStop (s)\tTotal (s)\n")
 
     for (evt, start, end) in events:
-        fo.write("%s\t%s\t%s\t%s\t%8.2f\t%8.2f\t%8.2f\n" % (evt, seconds2time(start), seconds2time(end), seconds2time(end-start), start, end, end-start))
+        fo.write("%-7s\t%s\t%s\t%s\t%8.2f\t%8.2f\t%8.2f\n" % (evt, seconds2time(start), seconds2time(end), seconds2time(end-start), start, end, end-start))
 
     fo.close()
 
+    return bins
+
+
+def summary(bins_list, fname):
+    header = True
+
+    fo = open(fname, "w")
+
+    for k1 in sorted(bins_list.keys()):
+        bins = bins_list[k1]
+
+        if header:
+            for k2 in sorted(bins.keys()):
+                v = bins[k2]
+                for (j, t) in enumerate(v):
+                    fo.write("\t%s_%d" % (k2, j))
+            fo.write("\n")
+            header = False
+
+        fo.write("%s" % k1)
+
+        for k2 in sorted(bins.keys()):
+            v = bins[k2]
+            for (j, t) in enumerate(v):
+                fo.write("\t%8.2f (%s)" % (t, seconds2time(t)))
+        fo.write("\n")
+
+    fo.close()
 
 #
 # Compute the mean velocity
