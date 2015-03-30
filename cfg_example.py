@@ -1,6 +1,7 @@
 # Full path of the top level directory containing the assay data
+#ORIG_DIR = "/home/jcruz/Desktop/5-RESEARCH/20140314-work-fish_behaviour/faustino/exp3/original"
+#DATA_DIR = "/home/jcruz/Desktop/5-RESEARCH/20140314-work-fish_behaviour/faustino/exp3/data"
 
-ORIG_DIR = "/home/jcruz/Desktop/5-RESEARCH/20140314-work-fish_behaviour/faustino/exp3/original"
 DATA_DIR = "/home/jcruz/Desktop/5-RESEARCH/20140314-work-fish_behaviour/faustino/exp1"
 
 FORCE_XLS_TO_TXT = False    # Forces the Excel files to be read
