@@ -61,31 +61,36 @@ The script expects, for each assay, the following data:
 
 2. A file with the (X, Y) coordinates obtained by a top view camera ("top" data).
 
-All data should be in excel files exactly as produced by ETS.
+All data should be in excel files exactly as produced by ETS and all files should be organized in a directory structure like this:
 
-Files can be automatically collected from the original directories to the final data processing directory.
+    /<experiment directory>
+        /<config>.py
+        /<data directory>
+            /<assay_1>_side.xls
+            /<assay_1>_top.xls
+            /<assay_2>_side.xls
+            /<assay_2>_top.xls
+            /<assay_3>_side.xls
+            /<assay_3>_top.xls
 
 **Important**
 
-1. Files must have the experiment name in the 'A10' cell.
+1. Files must finish with either `_side.xls` or `_top.xls`.
 
-2. The experiment name must end with either `_side` or `_top`.
+2. Files of the same assay must have the same prefix:
 
-3. The experiment names corresponding to the same subject must have the same prefix:
+    `Exp1_T2_side.xls`
+    `Exp1_T2_top.xls`
 
-    `Exp1_T2_side`
-    `Exp1_T2_top`
-
-    `Exp2_T2_side`
-    `Exp2_T2_top`
+    `Exp2_T2_side.xls`
+    `Exp2_T2_top.xls`
      
 
 After running the script with the appropriate parameters (see bellow __Running the Script__) it will generate in the `/<data directory>` the following files for each assay:
 
-    <subject_N>.txt    - A textual version of the Excel data.
-    <subject_N>.sub    - The subtitles for the respective video.
-    <subject_N>.report - A textual report with the FREEZE and EM windows.
-    summary.report   - A textual report with the summary of all subjects (should be easily copied to Excel).
+    <assay_N>.txt    - A textual version of the Excel data.
+    <assay_N>.sub    - The subtitles for the respective video.
+    <assay_N>.report - A textual report with the FREEZE and EM windows.
 
 
 ### Running the Stript
@@ -103,13 +108,11 @@ If no errors occurred check the directory specified by the `DATA_DIR` variable f
 
 ### Configuring the Script
 
-To create the configuration for a given expriment start by copying the example file `cfg_example.py` to another file (ex: `exp1.py`) and edit the new file. The available configurations are:
+The configurations for each experiment can be put all toghther in the same file. To create the configuration for a given expriment start by copying the example file `cfg_example.py` to another file (ex: `exp1.py`) and edit the new file accordingly. The available configurations are:
 
-    ORIG_DIR = "<path>"         # Full path of the original raw data Excel files as produced by the ETS.
+    DATA_DIR = "<path>"         # Full path of the top level directory containing the assay data.
 
-    DATA_DIR = "<path>"         # Full path of the data directory which will contain the renamed raw data files, the processed subject data files and the report results.
-
-    FORCE_XLS_TO_TXT = False    # Forces the Excel files to be (re)read.
+    FORCE_XLS_TO_TXT = False    # Forces the Excel files to be read.
 
     WIN_SMOOTH_SIZE = 25        # Size of the X, Y, Z smooth window in frames.
     WIN_VELOCITY_SIZE = 125     # Size of the velocity smooth window in frames.
@@ -119,8 +122,6 @@ To create the configuration for a given expriment start by copying the example f
     THRES_Y = 0.25              # Y position threshold for Freezing decision.
     THRESHOLD_DC = 5            # Direction change threshold for erratic movement decision (not used).
     THRESHOLD_A = 8             # Acceleration threshold for erratic movement decision.
-
-    BIN_SIZE = 120              # Time bin length in seconds.
 
 
 ### Decision Criteria
