@@ -52,7 +52,7 @@ def collect_excel(dir_orig, dir_data, recursive=True):
 
                 # 4. copy the file with the new name to the final directory
                 print "Copying file '%s' to '%s'" % (f, target)
-                os.system("cp %s %s" % (f, target))
+                os.system("cp '%s' '%s'" % (f, target))
             else:
                 print "Missing '_side', '_top' in cell A10 of file %s (found '%s')!" % (f, name)
 
