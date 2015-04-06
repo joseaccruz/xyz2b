@@ -34,6 +34,7 @@ THRES_Y = 0.25
 THRESHOLD_DC = 5
 THRESHOLD_A = 8
 BIN_SIZE = None
+SHOW_3D = False
 
 # execute the configuration data
 exec open(cfg_file).read()
@@ -128,9 +129,8 @@ for (key, files) in fpairs.items():
     bins = compute.report(fs, es, data_s, 0, name_rep, BIN_SIZE)
     bins_list[key] = bins
 
-    # ===============
-    # utils.plot3d(data_t[:, 1], data_t[:, 2], data_s[:, 2], fs, es)
-    # ===============
+    if SHOW_3D:
+        utils.plot3d(data_t[:, 1], data_t[:, 2], data_s[:, 2], fs, es)
 
     plt.figure(1)
     plt.subplot(5, 1, 1)

@@ -15,3 +15,5 @@ THRESHOLD_DC = 5            # Direction change threshold for erratic movement de
 THRESHOLD_A = 8             # Acceleration threshold for erratic movement decision.
 
 BIN_SIZE = 150              # Bin size in seconds.
+
+SHOW_3D = True

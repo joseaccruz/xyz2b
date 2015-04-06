@@ -2,6 +2,10 @@ import json
 import os
 import shutil
 
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
 import xlrd
 
 
@@ -101,17 +105,12 @@ def seconds2time(t):
     return("%02d:%02d:%02d.%02.0f" % (h, m, s, int((t-ti)*100)))
 
 
-import matplotlib as mpl
-# from mpl_toolkits.mplot3d import Axes3D
-# import numpy as np
-import matplotlib.pyplot as plt
-
-
 def plot3d(x, y, z, f, e):
     mpl.rcParams['legend.fontsize'] = 10
 
     fig = plt.figure()
-    ax = fig.gca(projection='3d')
+    # ax = fig.gca(projection='3d')
+    ax = Axes3D(fig)
 
     ax.plot(x, y, z, label='parametric curve')
     ax.scatter(x[f > 0], y[f > 0], z[f > 0], c='g', label='Freezing')
