@@ -105,7 +105,7 @@ def seconds2time(t):
     return("%02d:%02d:%02d.%02.0f" % (h, m, s, int((t-ti)*100)))
 
 
-def plot3d(x, y, z, f, e):
+def plot3d(x, y, z, f, e, xl, yl, zl):
     mpl.rcParams['legend.fontsize'] = 10
 
     fig = plt.figure()
@@ -113,9 +113,19 @@ def plot3d(x, y, z, f, e):
     ax = Axes3D(fig)
 
     ax.plot(x, y, z, label='parametric curve')
+
     ax.scatter(x[f > 0], y[f > 0], z[f > 0], c='r', label='Freezing')
     ax.scatter(x[e > 0], y[e > 0], z[e > 0], c='g', label='Erratic Movement')
 
     ax.legend()
+
+    if xl is not None:
+        ax.set_xlim(xl)
+
+    if yl is not None:
+        ax.set_ylim(yl)
+
+    if zl is not None:
+        ax.set_zlim(zl)
 
     plt.show()
