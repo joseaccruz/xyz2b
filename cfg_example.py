@@ -17,3 +17,7 @@ THRESHOLD_A = 8             # Acceleration threshold for erratic movement decisi
 BIN_SIZE = 150              # Bin size in seconds.
 
 SHOW_3D = True
+
+XLIMS = (0, 10.5)
+YLIMS = (0, 10.5)
+ZLIMS = (0, 11)
