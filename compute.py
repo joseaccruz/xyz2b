@@ -224,7 +224,8 @@ def summary(bins_list, fname):
         for k2 in sorted(bins.keys()):
             v = bins[k2]
             for (j, t) in enumerate(v):
-                fo.write("\t%8.2f (%s)" % (t, seconds2time(t)))
+                # fo.write("\t%8.2f (%s)" % (t, seconds2time(t)))
+                fo.write("\t%8.2f" % t)
         fo.write("\n")
 
     fo.close()
