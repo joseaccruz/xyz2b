@@ -105,18 +105,21 @@ def seconds2time(t):
     return("%02d:%02d:%02d.%02.0f" % (h, m, s, int((t-ti)*100)))
 
 
-def plot3d(x, y, z, f, e, xl, yl, zl):
+def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_normal={}, style_erratic={}, style_freeze={}):
     mpl.rcParams['legend.fontsize'] = 10
 
     fig = plt.figure()
     # ax = fig.gca(projection='3d')
     ax = Axes3D(fig)
 
-    ax.plot(x, y, z, label='parametric curve')
+    ax.plot(x, y, z, style_normal.get("linestyle", None), c=style_normal.get("color", None), label='Normal', linewidth=style_normal.get("linewidth", None))
 
-    ax.scatter(x[f > 0], y[f > 0], z[f > 0], c='r', label='Freezing')
-    ax.scatter(x[e > 0], y[e > 0], z[e > 0], c='g', label='Erratic Movement')
+    ax.plot(x[e > 0], y[e > 0], z[e > 0], style_erratic.get("linestyle", None), c=style_erratic.get("color", None), label='Erratic', linewidth=style_erratic.get("linewidth", None))
+    # ax.scatter(x[e > 0], y[e > 0], z[e > 0], c='b', label='Erratic Movement')
 
+    ax.scatter(x[f > 0], y[f > 0], z[f > 0], c=style_freeze.get("color", None), s=style_freeze.get("size", None), label='Freezing')
+
+    ax.view_init(elev=style.get("elev", None), azim=style.get("azim", None))
     ax.legend()
 
     if xl is not None:
@@ -127,5 +130,8 @@ def plot3d(x, y, z, f, e, xl, yl, zl):
 
     if zl is not None:
         ax.set_zlim(zl)
+
+    if fname is not None:
+        plt.savefig(fname, dpi=fdpi)
 
     plt.show()

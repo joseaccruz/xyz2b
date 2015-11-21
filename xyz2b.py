@@ -35,6 +35,14 @@ THRESHOLD_DC = 5
 THRESHOLD_A = 8
 BIN_SIZE = None
 SHOW_3D = False
+FIG_FORMAT = "png"
+FIG_DPI = None
+
+FIG3D = {"elev": 27, "azim": 127}
+FIG3D_NORMAL  = {"linestyle": "-", "linewidth": 0.5, "color": "g"}
+FIG3D_ERRATIC = {"linestyle": "-", "linewidth": 1.5, "color": "orange"}
+FIG3D_FREEZE  = {"linestyle": "-", "linewidth": 0.5}
+
 
 XLIMS = None
 YLIMS = None
@@ -83,6 +91,8 @@ for (key, files) in fpairs.items():
 
     name_sub = "%s/%s.sub" % (DATA_DIR, key)
     name_rep = "%s/%s.report" % (DATA_DIR, key)
+    name_fig1 = "%s/%s_fig1.%s" % (DATA_DIR, key, FIG_FORMAT)
+    name_fig2 = "%s/%s_fig2.%s" % (DATA_DIR, key, FIG_FORMAT)
 
     (trim_start, trim_end) = (None, None)
     for ftxt in files:
@@ -134,7 +144,7 @@ for (key, files) in fpairs.items():
     bins_list[key] = bins
 
     if SHOW_3D:
-        utils.plot3d(data_t[:, 1], data_t[:, 2], data_s[:, 2], fs, es, XLIMS, YLIMS, ZLIMS)
+        utils.plot3d(data_t[:, 1], data_t[:, 2], data_s[:, 2], fs, es, XLIMS, YLIMS, ZLIMS, fname=name_fig2, fdpi=FIG_DPI, style=FIG3D, style_normal=FIG3D_NORMAL, style_erratic=FIG3D_ERRATIC, style_freeze=FIG3D_FREEZE)
 
     plt.figure(1)
     plt.subplot(5, 1, 1)
@@ -163,6 +173,7 @@ for (key, files) in fpairs.items():
     plt.plot(T, dchanges_t[:, 0], 'g')
     plt.axhline(thdc)
 
+    plt.savefig(name_fig1, dpi=FIG_DPI)
     plt.show()
 
 name_summary = "%s/summary.report" % DATA_DIR
