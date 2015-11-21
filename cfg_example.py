@@ -21,3 +21,12 @@ SHOW_3D = True
 XLIMS = (0, 10.5)
 YLIMS = (0, 10.5)
 ZLIMS = (0, 11)
+
+FIG_FORMAT = "svg"          # picture format (.png, .svg)
+FIG_DPI = 300               # picture resolution in dots per inch
+
+FIG3D = {"elev": 27, "azim": 133}   # orientation of the 3D plot
+
+FIG3D_NORMAL  = {"linestyle": "-", "linewidth": 0.5, "color": "g"}          # 'normal' behaviour settings
+FIG3D_ERRATIC = {"linestyle": "-", "linewidth": 1.5, "color": "orange"}     # 'erratic' behaviour settings
+FIG3D_FREEZE  = {"size": 150, "color": "r"}                                 # 'freeze' behaviour settings

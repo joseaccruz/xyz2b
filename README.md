@@ -124,6 +124,15 @@ To create the configuration for a given experiment start by copying the example 
     
     SHOW_3D = True
 
+    FIG_FORMAT = "svg"          # picture format (.png, .svg)
+    FIG_DPI = 300               # picture resolution in dots per inch
+
+    FIG3D = {"elev": 27, "azim": 133}   # orientation of the 3D plot
+
+    FIG3D_NORMAL  = {"linestyle": "-", "linewidth": 0.5, "color": "g"}          # 'normal' behaviour settings
+    FIG3D_ERRATIC = {"linestyle": "-", "linewidth": 1.5, "color": "orange"}     # 'erratic' behaviour settings
+    FIG3D_FREEZE  = {"size": 150, "color": "r"}                                 # 'freeze' behaviour settings
+
 
 ### Decision Criteria
 
