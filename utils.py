@@ -5,6 +5,7 @@ import shutil
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
 import xlrd
 
@@ -106,6 +107,19 @@ def seconds2time(t):
 
 
 def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_normal={}, style_erratic={}, style_freeze={}):
+    out = True
+    for (i, n) in enumerate(f):
+        if (n > 0) and out:
+            start = i
+            out = False
+
+        if (n < 1.0) and (not out):
+            if (i - start) < 125:
+                for j in xrange(start, i):
+                    f[j] = 0
+            start = None
+            out = True
+
     mpl.rcParams['legend.fontsize'] = 10
 
     fig = plt.figure()
