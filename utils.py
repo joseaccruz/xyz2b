@@ -108,15 +108,23 @@ def seconds2time(t):
 
 def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_normal={}, style_erratic={}, style_freeze={}):
     out = True
+    ff = np.zeros(len(f))
+    ffs = []
+
     for (i, n) in enumerate(f):
         if (n > 0) and out:
             start = i
             out = False
 
         if (n < 1.0) and (not out):
-            if (i - start) < 125:
-                for j in xrange(start, i):
-                    f[j] = 0
+            #if (i - start) > 125:
+            ff[start+(i-start)/2] = 1.0
+            #ff[i] = 1.0
+            ffs.append(np.zeros(len(f)))
+
+            for j in xrange(start, i):
+                ffs[-1][j] = 1.0
+
             start = None
             out = True
 
@@ -131,7 +139,11 @@ def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_nor
     ax.plot(x[e > 0], y[e > 0], z[e > 0], style_erratic.get("linestyle", None), c=style_erratic.get("color", None), label='Erratic', linewidth=style_erratic.get("linewidth", None))
     # ax.scatter(x[e > 0], y[e > 0], z[e > 0], c='b', label='Erratic Movement')
 
-    ax.scatter(x[f > 0], y[f > 0], z[f > 0], c=style_freeze.get("color", None), s=style_freeze.get("size", None), label='Freezing')
+    ax.scatter(x[ff > 0], y[ff > 0], z[ff > 0], c=style_freeze.get("color", None), s=style_freeze.get("size", None), label='Freezing')
+
+    #for fx in ffs:
+    #    ax.plot(x[fx > 0], y[fx > 0], z[fx > 0], style_erratic.get("linestyle", None), c=style_freeze.get("color", None), label='Erratic', linewidth=style_erratic.get("linewidth", None))
+
 
     ax.view_init(elev=style.get("elev", None), azim=style.get("azim", None))
     ax.legend()
