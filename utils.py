@@ -135,11 +135,10 @@ def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_nor
     ax.plot(x[e > 0], y[e > 0], z[e > 0], style_erratic.get("linestyle", None), c=style_erratic.get("color", None), label='Erratic', linewidth=style_erratic.get("linewidth", None))
     # ax.scatter(x[e > 0], y[e > 0], z[e > 0], c='b', label='Erratic Movement')
 
-    #ax.scatter(x[ff > 0], y[ff > 0], z[ff > 0], c=style_freeze.get("color", None), s=style_freeze.get("size", None), label='Freezing')
+    # ax.scatter(x[ff > 0], y[ff > 0], z[ff > 0], c=style_freeze.get("color", None), s=style_freeze.get("size", None), label='Freezing')
 
     for (fx, fsize) in zip(fs, fsizes):
-        ax.scatter(x[fx > 0], y[fx > 0], z[fx > 0], c=style_freeze.get("color", None), s=fsize/10, label='Freezing')
-
+        ax.scatter(x[fx > 0], y[fx > 0], z[fx > 0], c=style_freeze.get("color", None), s=fsize/style_freeze.get("size"), label='Freezing')
 
     ax.view_init(elev=style.get("elev", None), azim=style.get("azim", None))
     ax.legend()
