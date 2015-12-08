@@ -86,6 +86,8 @@ After running the script with the appropriate parameters (see bellow __Running t
     <subject_N>.sub    - The subtitles for the respective video.
     <subject_N>.report - A textual report with the FREEZE and EM windows.
     summary.report   - A textual report with the summary of all subjects (should be easily copied to Excel).
+    <subject_N_fig1>.svg    - A scalable vector graphics file with the graphical thresholds for FREEZE and EM.
+    <subject_N_fig2>.svg    - A scalable vector graphics file with the 3D plot for FREEZE and EM visualization.
 
 
 ### Running the Script
@@ -123,6 +125,10 @@ To create the configuration for a given experiment start by copying the example 
     BIN_SIZE = 300              # Time bin length in seconds.
     
     SHOW_3D = True
+    
+    XLIMS = (0, 10.5)
+    YLIMS = (0, 10.5)
+    ZLIMS = (0, 11)
 
     FIG_FORMAT = "svg"          # picture format (.png, .svg)
     FIG_DPI = 300               # picture resolution in dots per inch
