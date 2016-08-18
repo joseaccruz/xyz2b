@@ -41,7 +41,7 @@ FIG_DPI = None
 FIG3D = {"elev": 27, "azim": 127}
 FIG3D_NORMAL  = {"linestyle": "-", "linewidth": 0.5, "color": "g"}
 FIG3D_ERRATIC = {"linestyle": "-", "linewidth": 1.5, "color": "orange"}
-FIG3D_FREEZE  = {"linestyle": "-", "linewidth": 0.5}
+FIG3D_FREEZE  = {"size": 150, "color": "r"}
 
 
 XLIMS = None

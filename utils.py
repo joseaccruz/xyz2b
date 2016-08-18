@@ -103,7 +103,7 @@ def seconds2time(t):
     m = int(ti % 3600 / 60)
     s = int(ti % 60)
 
-    return("%02d:%02d:%02d.%02.0f" % (h, m, s, int((t-ti)*100)))
+    return("%02d:%02d:%02d.%02.0f" % (h, m, s, int((t - ti) * 100)))
 
 
 def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_normal={}, style_erratic={}, style_freeze={}):
@@ -117,7 +117,7 @@ def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_nor
 
         if (n < 1.0) and (not out):
             tmp = np.zeros(len(f))
-            tmp[start+(i-start)/2] = 1.0
+            tmp[start + (i - start) / 2] = 1.0
 
             fs.append(tmp)
             fsizes.append((i - start))
@@ -138,7 +138,7 @@ def plot3d(x, y, z, f, e, xl, yl, zl, fname=None, fdpi=None, style={}, style_nor
     # ax.scatter(x[ff > 0], y[ff > 0], z[ff > 0], c=style_freeze.get("color", None), s=style_freeze.get("size", None), label='Freezing')
 
     for (fx, fsize) in zip(fs, fsizes):
-        ax.scatter(x[fx > 0], y[fx > 0], z[fx > 0], c=style_freeze.get("color", None), s=fsize/style_freeze.get("size"), label='Freezing')
+        ax.scatter(x[fx > 0], y[fx > 0], z[fx > 0], c=style_freeze.get("color", None), s=fsize / style_freeze.get("size"), label='Freezing')
 
     ax.view_init(elev=style.get("elev", None), azim=style.get("azim", None))
     ax.legend()
